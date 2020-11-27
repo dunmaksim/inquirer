@@ -16,5 +16,11 @@ requirements:
 requirements-dev:
 	$(PYTHON) -m pip install -r REQUIREMENTS-DEV.txt -U
 
-install: update-requirements static-update
+install: requirements static-update
 	$(MANAGE) migrate
+
+demo:
+	$(PYTHON) -m pip install -r REQUIREMENTS.txt -U
+	$(MANAGE) migrate
+	$(MANAGE) collectstatic --noinput
+	$(MANAGE) runserver

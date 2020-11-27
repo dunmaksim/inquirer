@@ -5,15 +5,34 @@ u"""
 писать этот код.
 """
 
+import uuid
 from os.path import join as pathjoin
 from os.path import dirname, abspath
+from os import environ # SECRET_KEY
+import sys # exit
+import random
+import string
+
+_SECRET_KEY_LENGTH = 30
+
+def generate_secret_key():
+    letters = string.ascii_letters + string.digits
+    return ''.join(random.choice(letters) for i in range(_SECRET_KEY_LENGTH))
 
 BASE_DIR = dirname(dirname(abspath(__file__)))
 
+SECRET_KEY = None
+DEBUG = environ.get('DEBUG', True)
 
-SECRET_KEY = 'h!890h#h*#hecmlxhn@$)wb1mm-zp2s+7u1t3i-7%7ps07jwmc'
-
-DEBUG = True
+if DEBUG:
+    if 'SECRET_KEY' in environ:
+        SECRET_KEY = environ.get('SECRET_KEY')
+    else:
+        SECRET_KEY = generate_secret_key()
+else:
+    # На боевом сервере SECRET_KEY должен быть объявлен как переменная окружения
+    print("Для работы приложения требуется наличие переменной окружения SECRET_KEY.")
+    sys.exit()
 
 ALLOWED_HOSTS = []
 
@@ -99,3 +118,11 @@ MEDIA_URL = '/media/'
 
 STATIC_ROOT = pathjoin(BASE_DIR, 'static')
 MEDIA_ROOT = pathjoin(BASE_DIR, 'media')
+
+
+REST_FRAMEWORK ={
+    'DEFAULT_AUTHENTICATION_CLASSES': [
+        'rest_framework.authentication.BasicAuthentication',
+        'rest_framework.authentication.SessionAuthentication',
+    ]
+}

@@ -136,6 +136,8 @@ class AnswerForAskWithOneAnswer(AbstractAnswer):
 
     u"""Модель ответа на вопрос с одним ответом."""
 
+    ask = ForeignKey(AskWithOneAnswer, on_delete=CASCADE, related_name='answers')
+
     class Meta:
         db_table = 'answers_to_ask_with_one_answer'
         verbose_name = u'ответ на вопрос с одним ответом'
@@ -145,6 +147,8 @@ class AnswerForAskWithOneAnswer(AbstractAnswer):
 class AnswerForAskWithMultipleAnswers(AbstractAnswer):
 
     u"""Модель ответа на вопрос с множеством доступных ответов."""
+
+    ask = ForeignKey(AskWithMultipleAnswers, on_delete=CASCADE, related_name='answers')
 
     class Meta:
         db_table = 'answers_to_ask_with_multiple_answers'
