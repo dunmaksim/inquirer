@@ -11,35 +11,32 @@ from core.models import AskWithMultipleAnswers
 from core.models import AskWithTextAnswer
 from core.models import AnswerForAskWithOneAnswer
 from core.models import AnswerForAskWithMultipleAnswers
+from core.models import UserAnswersForAskWithOneAnswer
+from core.models import UserAnswersForAskWithMultipleAnswers
+from core.models import UserTextAnswer
 
 
 class InterrogationAdmin(ModelAdmin):
     list_display = (
-        'name',
-        'date_begin',
-        'date_end',
-        'active',
+        "name",
+        "date_begin",
+        "date_end",
+        "is_active",
     )
 
     list_filter = (
-        'date_begin',
-        'date_end',
-        'active',
+        "date_begin",
+        "date_end",
+        "is_active",
     )
 
-    search_fields = (
-        'name__icontains',
-    )
+    search_fields = ("name__icontains",)
 
-    list_filter = (
-        ('active', BooleanFieldListFilter),
-    )
+    list_filter = (("is_active", BooleanFieldListFilter),)
 
 
 class AskWithOneAnswerAdmin(ModelAdmin):
-    list_display = (
-        'text',
-    )
+    list_display = ("text",)
 
 
 class AskWithMultipleAnswersAdmin(ModelAdmin):
@@ -58,10 +55,26 @@ class AnswerForAskWithMultipleAnswersAdmin(ModelAdmin):
     pass
 
 
+class UserAnswersForAskWithOneAnswersAdmin(ModelAdmin):
+    pass
+
+
+class UserAnswersForAskWithMultipleAnswersAdmin(ModelAdmin):
+    pass
+
+
+class UserTextAnswersAdmin(ModelAdmin):
+    pass
+
+
 site.register(Interrogation, InterrogationAdmin)
 site.register(AskWithOneAnswer, AskWithOneAnswerAdmin)
 site.register(AskWithMultipleAnswers, AskWithMultipleAnswersAdmin)
 site.register(AskWithTextAnswer, AskWithTextAnswerAdmin)
 site.register(AnswerForAskWithOneAnswer, AnswerForAskWithOneAnswerAdmin)
-site.register(AnswerForAskWithMultipleAnswers,
-              AnswerForAskWithMultipleAnswersAdmin)
+site.register(AnswerForAskWithMultipleAnswers, AnswerForAskWithMultipleAnswersAdmin)
+site.register(UserAnswersForAskWithOneAnswer, UserAnswersForAskWithOneAnswersAdmin)
+site.register(
+    UserAnswersForAskWithMultipleAnswers, UserAnswersForAskWithMultipleAnswersAdmin
+)
+site.register(UserTextAnswer, UserTextAnswersAdmin)

@@ -2,3 +2,7 @@ django==2.2.10
 djangorestframework
 python-language-server[all]
 jedi-language-server
+black
+wheel
+pyyaml
+uritemplate

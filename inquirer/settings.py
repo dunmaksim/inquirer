@@ -8,12 +8,13 @@ u"""
 import uuid
 from os.path import join as pathjoin
 from os.path import dirname, abspath
-from os import environ # SECRET_KEY
+from os import getenv # SECRET_KEY
 import sys # exit
 import random
 import string
 
 _SECRET_KEY_LENGTH = 30
+
 
 def generate_secret_key():
     letters = string.ascii_letters + string.digits
@@ -22,13 +23,11 @@ def generate_secret_key():
 BASE_DIR = dirname(dirname(abspath(__file__)))
 
 SECRET_KEY = None
-DEBUG = environ.get('DEBUG', True)
+DEBUG = getenv('DEBUG', True)
 
 if DEBUG:
-    if 'SECRET_KEY' in environ:
-        SECRET_KEY = environ.get('SECRET_KEY')
-    else:
-        SECRET_KEY = generate_secret_key()
+    # Для отладки можно и сгенеренный на ходу использовать
+    SECRET_KEY = getenv('SECRET_KEY', generate_secret_key())
 else:
     # На боевом сервере SECRET_KEY должен быть объявлен как переменная окружения
     print("Для работы приложения требуется наличие переменной окружения SECRET_KEY.")
@@ -119,6 +118,7 @@ MEDIA_URL = '/media/'
 STATIC_ROOT = pathjoin(BASE_DIR, 'static')
 MEDIA_ROOT = pathjoin(BASE_DIR, 'media')
 
+SESSION_SAVE_EVERY_REQUEST = True # Сохранять данные о сессии при каждом запросе.
 
 REST_FRAMEWORK ={
     'DEFAULT_AUTHENTICATION_CLASSES': [
